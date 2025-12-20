@@ -2,6 +2,10 @@
 
 A minimalist timer app with a focus on simplicity and ease of use.
 
+> [!WARNING]
+> 
+> AstraPulse has been tested on macOS only.
+
 ### Run dev
 
 ```bash
