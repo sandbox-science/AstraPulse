@@ -1,4 +1,8 @@
-# AstraPulse
+<p align="center">
+  <img src="./src-tauri/icons/128x128@2x.png" alt="AstraPulse Logo">
+</p>
+
+<h1 align="center">AstraPulse</h1>
 
 A minimalist timer app with a focus on simplicity and ease of use.
 
