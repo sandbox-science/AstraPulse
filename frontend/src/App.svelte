@@ -208,9 +208,6 @@
         <section class="timer">
             <div class="ring" style={`--p:${progress() * 100}%`}>
                 <div class="time" aria-live="polite">{format(remaining)}</div>
-                <div class="meta">
-                    {Math.max(0, Math.ceil(remaining / 60000))} min left
-                </div>
             </div>
         </section>
 
@@ -383,7 +380,7 @@
         background: conic-gradient(
             from 270deg,
             rgba(99, 102, 241, 0.95) var(--p),
-            rgba(148, 163, 184, 0.22) 0
+            rgba(148, 163, 184, 0.413) 0
         );
         position: relative;
         box-shadow: 0 16px 30px rgba(2, 6, 23, 0.1);
@@ -398,25 +395,15 @@
         border: 1px solid rgba(148, 163, 184, 0.25);
     }
 
-    .time,
-    .meta {
+    .time {
         position: relative;
         z-index: 1;
         text-align: center;
-    }
-
-    .time {
         font-variant-numeric: tabular-nums;
         font-size: 54px;
         font-weight: 700;
         letter-spacing: -0.04em;
         line-height: 1;
-    }
-
-    .meta {
-        margin-top: 10px;
-        font-size: 12px;
-        color: #64748b;
     }
 
     .actions {
