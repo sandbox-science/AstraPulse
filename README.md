@@ -29,5 +29,5 @@ cargo tauri build
 
 ## Notes
 
-- The frontend is implemented with Leptos and lives in `frontend/`.
+- The frontend is implemented with Svelte and lives in `frontend/`.
 - The backend is implemented with Rust and Tauri, and lives in `src-tauri/`.
