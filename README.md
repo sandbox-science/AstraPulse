@@ -10,7 +10,7 @@ A minimalist timer app with a focus on simplicity and ease of use.
 > 
 > AstraPulse has been tested on macOS only.
 
-### Run dev
+### Run for development
 
 ```bash
 # Build the frontend
@@ -26,7 +26,7 @@ cargo tauri dev
 ```bash
 # Build the frontend
 cd frontend
-npm run build
+npm install
 # Open a new terminal window in root directory and run:
 cargo tauri build
 ```
