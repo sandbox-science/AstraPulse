@@ -26,7 +26,7 @@ cargo tauri dev
 ```bash
 # Build the frontend
 cd frontend
-npm run dev
+npm run build
 # Open a new terminal window in root directory and run:
 cargo tauri build
 ```
