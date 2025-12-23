@@ -1,73 +1,74 @@
 <script>
-    import { onMount, createEventDispatcher } from "svelte";
-    import { getName, getVersion } from "@tauri-apps/api/app";
+  import { onMount, createEventDispatcher } from "svelte";
+  import { getName, getVersion } from "@tauri-apps/api/app";
 
-    export let open = false;
+  export let open = false;
 
-    let appName = "AstraPulse";
-    let version = "0.1.0";
-    const dispatch = createEventDispatcher();
+  let appName = "AstraPulse";
+  let version = "0.1.0";
+  let license = "GPL v3.0";
 
-    onMount(async () => {
-        try
-        {
-            appName = await getName();
-            version = await getVersion();
-        }
-        catch (e)
-        {
-            // running in browser or permission failure
-            console.warn("failed to read app metadata", e);
-        }
-    });
+  const dispatch = createEventDispatcher();
 
-    function close() {
-        open = false;
-        dispatch("close");
+  onMount(async () => {
+    try
+    {
+      appName = await getName();
+      version = await getVersion();
     }
+    catch (e)
+    {
+      // running in browser or permission failure
+      console.warn("failed to read app metadata", e);
+    }
+  });
+
+  function close()
+  {
+    open = false;
+    dispatch("close");
+  }
 </script>
 
 {#if open}
-    <div
-        class="about-overlay"
-        role="dialog"
-        aria-modal="true"
-        aria-label="About dialog"
-    >
-        <div class="about-card">
-            <header class="about-header">
-                <div>
-                    <div class="about-title">{appName}</div>
-                    <div class="about-sub">Version {version}</div>
-                </div>
-                <button class="icon" aria-label="Close" on:click={close}
-                    >✕</button
-                >
-            </header>
-
-            <div class="about-body">
-                <p>
-                    AstraPulse is a small, focused Pomodoro-style timer to help
-                    you stay productive. It is built using a Svelte frontend
-                    inside a Tauri wrapper for a native desktop experience.
-                </p>
-
-                <p>
-                    Website: <a
-                        href="https://sandboxscience.vercel.app/"
-                        target="_blank"
-                        rel="noopener">sandboxscience.vercel.app</a
-                    >
-                </p>
-
-                <p class="muted">© SandBox Science — License: TBD</p>
-            </div>
-
-            <footer class="about-footer">
-                <button class="secondary" on:click={close}>Close</button>
-            </footer>
+  <div
+    class="about-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-label="About dialog"
+  >
+    <div class="about-card">
+      <header class="about-header">
+        <div>
+          <div class="about-title">{appName}</div>
+          <div class="about-sub">Version {version}</div>
         </div>
+        <button class="icon" aria-label="Close" on:click={close}>✕</button>
+      </header>
+
+      <div class="about-body">
+        <p>
+          AstraPulse is a small, focused Pomodoro-style timer to help you stay
+          productive. It is built using a Svelte frontend inside a Tauri wrapper
+          for a native desktop experience.
+        </p>
+
+        <p>
+          Website: <a
+            href="https://sandboxscience.vercel.app/"
+            target="_blank"
+            rel="noopener">sandboxscience.vercel.app</a
+          >
+        </p>
+
+        <p class="muted">© SandBox Science — License: {license}</p>
+      </div>
+
+      <footer class="about-footer">
+        <button class="secondary" on:click={close}>Close</button>
+      </footer>
     </div>
+  </div>
 {/if}
 
 <style>
@@ -91,7 +92,7 @@
     padding: 18px;
     box-shadow:
       0 26px 70px rgba(2, 6, 23, 0.28),
-      0 2px 10px rgba(2, 6, 23, 0.10);
+      0 2px 10px rgba(2, 6, 23, 0.1);
     color: #0f172a;
     overflow: hidden;
   }
@@ -180,7 +181,10 @@
     border: 1px solid rgba(148, 163, 184, 0.22);
     color: #0f172a;
     cursor: pointer;
-    transition: transform 0.08s ease, background 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.08s ease,
+      background 0.2s ease,
+      box-shadow 0.2s ease;
     user-select: none;
   }
 
@@ -203,7 +207,10 @@
     font-weight: 650;
     letter-spacing: -0.01em;
     cursor: pointer;
-    transition: transform 0.08s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition:
+      transform 0.08s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
   }
 
   .secondary:hover {
