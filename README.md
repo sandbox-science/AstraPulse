@@ -35,3 +35,7 @@ cargo tauri build
 
 - The frontend is implemented with Svelte and lives in `frontend/`.
 - The backend is implemented with Rust and Tauri, and lives in `src-tauri/`.
+
+## Demo
+
+![AstraPulse Demo](./assets/demo.png)
