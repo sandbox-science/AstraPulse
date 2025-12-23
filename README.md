@@ -4,7 +4,7 @@
 
 <h1 align="center">AstraPulse</h1>
 
-A minimalist timer app with a focus on simplicity and ease of use.
+A minimalist timer app designed for simplicity and ease of use. You can start a timer and forget about the app, but it won’t forget you. When the timer reaches zero, the app will emit a background sound to alert you that the time is up. You can focus on your work instead of constantly checking when your next break is.
 
 > [!WARNING]
 > 
