@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import About from './components/About.svelte';
     let showAbout = false;
 
@@ -12,16 +12,23 @@
     // UI state
     let customMinutes = 25;
     const presetButtons = [
+        { label: "5",  ms:  5 * 60 * 1000 },
         { label: "15", ms: 15 * 60 * 1000 },
-        { label: "25", ms: 25 * 60 * 1000 },
-        { label: "50", ms: 50 * 60 * 1000 },
+        { label: "30", ms: 30 * 60 * 1000 },
+        { label: "60", ms: 60 * 60 * 1000 },
     ];
 
     function format(ms)
     {
-        const total = Math.ceil(ms / 1000);
-        const m     = Math.floor(total / 60);
+        const total = Math.floor(ms / 1000);
+        const h     = Math.floor(total / 3600);
+        const m     = Math.floor((total % 3600) / 60);
         const s     = total % 60;
+
+        if ( h > 0 )
+        {
+            return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+        }
         return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
     }
 
@@ -36,7 +43,7 @@
 
     function start()
     {
-        if (!duration)
+        if (!duration || running || rafId !== null)
         {
             return;
         }
@@ -48,10 +55,12 @@
     function stop()
     {
         running = false;
-        if (rafId)
+        if (rafId == null)
         {
-            cancelAnimationFrame(rafId);
+            return;
         }
+
+        cancelAnimationFrame(rafId);
         rafId = null;
     }
 
@@ -65,6 +74,7 @@
     {
         if (!duration)
         {
+            stop();
             return;
         }
         const delta = now - lastTime;
@@ -75,11 +85,9 @@
         {
             stop();
             onTimerEnd();
+            return;
         }
-        else
-        {
-            rafId = requestAnimationFrame(tick);
-        }
+        rafId = requestAnimationFrame(tick);
     }
 
     function setPreset(ms)
@@ -104,7 +112,12 @@
     {
         try
         {
-            const ctx         = new AudioContext();
+            if (!window.AudioContext && !window.webkitAudioContext)
+            {
+                return;
+            }
+
+            const ctx         = new (window.AudioContext || window.webkitAudioContext)();
             const o           = ctx.createOscillator();
             const g           = ctx.createGain();
             o.type            = "sine";
@@ -165,14 +178,27 @@
         notify("Timer finished", "Take a break!");
     }
 
+    function handleKeydown(e)
+    {
+        if (e.key === 'Enter')
+        {
+            e.preventDefault();
+            setCustom();
+        }
+    }
+
     onMount(() => {
-        remaining = duration;
+        remaining     = duration;
         customMinutes = Math.round(duration / 60000);
+    });
+
+    onDestroy(() => {
+        stop();
     });
 </script>
 
-<div class="shell">
-    <div class="card" role="application" aria-label="AstraPulse timer">
+<div class="timer-shell">
+    <div class="card" role="timer" aria-label="AstraPulse timer">
         <header class="top">
             <div class="brand">
                 <div class="dot" aria-hidden="true"></div>
@@ -253,12 +279,13 @@
                 <label class="field">
                     <span class="label">Minutes</span>
                     <input
+                        id="customInput"
                         type="number"
                         min="1"
                         step="1"
                         bind:value={customMinutes}
                         inputmode="numeric"
-                        placeholder="25"
+                        on:keydown={handleKeydown}
                     />
                 </label>
                 <button type="button" class="secondary" on:click={setCustom}
@@ -306,9 +333,9 @@
             linear-gradient(180deg, #f8fafc, #ffffff);
     }
 
-    .shell {
-        padding: 24px;
+    .timer-shell {
         width: min(440px, 100%);
+        margin: 0 auto;
     }
 
     .card {
@@ -400,10 +427,14 @@
         z-index: 1;
         text-align: center;
         font-variant-numeric: tabular-nums;
-        font-size: 54px;
         font-weight: 700;
         letter-spacing: -0.04em;
         line-height: 1;
+        display: inline-block;
+        max-width: calc(100% - 40px);
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: clamp(20px, 8vw, 54px);
     }
 
     .actions {
@@ -486,6 +517,7 @@
 
     .presets {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 8px;
         margin-bottom: 12px;
