@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Improved internal timer control flow for clarity and maintainability.
 - Ensured timer cleanup occurs reliably on component unmount.
 - Center the presets button.
+- The render of the timer in the ring now display hours when minutes are equal or above 60 minutes.
 
 ### Fixed
 - Fixed potential background animation frame leaks when stopping or unmounting the timer.
