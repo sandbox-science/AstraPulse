@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.0.0] – 2025-12-27
+
 ### Added
 - Improved accessibility semantics by introducing proper `role="timer"` usage for the countdown display.
 - Added two new presets (5 and 30 minutes).
