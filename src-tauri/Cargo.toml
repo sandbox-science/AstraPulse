@@ -1,6 +1,6 @@
 [package]
 name = "AstraPulse"
-version = "0.1.0"
+version = "1.0.0"
 description = "AstraPulse, a calm focus timer for deep work."
 authors = ["Chris Dedman"]
 edition = "2024"

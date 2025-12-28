@@ -5,7 +5,7 @@
   export let open = false;
 
   let appName = "AstraPulse";
-  let version = "0.1.0";
+  let version = "1.0.0";
   let license = "GPL v3.0";
 
   const dispatch = createEventDispatcher();
